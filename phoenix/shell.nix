@@ -9,7 +9,7 @@
     elixir
     hex
     mix2nix
-    postgresql
+    # postgresql
     esbuild
     tailwindcss
   ];
@@ -37,12 +37,12 @@
 
     # postgres related
     # keep all your db data in a folder inside the project
-    export PGDATA="$PWD/db"
+    # export PGDATA="$PWD/db"
 
     # phoenix related env vars
-    export POOL_SIZE=15
-    export DB_URL="postgresql://postgres:postgres@localhost:5432/${dbName}"
-    export PORT=4000
+    # export POOL_SIZE=15
+    # export DB_URL="postgresql://postgres:postgres@localhost:5432/${dbName}"
+    # export PORT=4000
   '';
 in
   pkgs.mkShell {
