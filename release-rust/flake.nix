@@ -2,7 +2,7 @@
   description = "(a description of your package goes here)";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-25.05;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-25.11;
     rust-overlay.url = github:oxalica/rust-overlay;
   };
 
@@ -12,9 +12,9 @@
     rust-overlay,
   }: let
     overlay = prev: final: rec {
-      beamPackages = prev.beam.packagesWith prev.beam.interpreters.erlang_27;
-      elixir = beamPackages.elixir_1_18;
-      erlang = prev.erlang_27;
+      beamPackages = prev.beamMinimal28Packages;
+      elixir = beamPackages.elixir_1_19;
+      erlang = beamPackages.erlang;
       hex = beamPackages.hex;
       final.mix2nix = prev.mix2nix.overrideAttrs {
         nativeBuildInputs = [final.elixir];
@@ -53,7 +53,7 @@
         # A hash that ensures we're getting the right src.
         # Get this hash by running `nix hash path native/my-rust-src`
         # Nix will attempt to verify this when building and tell you the hash it got vs what it expected
-        cargoHash = "sha256-M9Uql8ekY/ipraRqdNyUzzbs+j8g0a2DjuLldWP3cWs=";
+        # cargoHash = "";
       };
     in rec {
       default = pkgs.beamPackages.mixRelease {
@@ -77,7 +77,7 @@
           substituteInPlace lib/my-elixir-app/native.ex --replace "crate: \"my-rust-pkg\"" """
               crate: \"my-rust-pkg\",
               skip_compilation?: true,
-              load_from: {:k256, \"priv/native/my-rust-pkg\"}
+              load_from: {:name, \"priv/native/my-rust-pkg\"}
               \
 
           """

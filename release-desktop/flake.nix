@@ -2,7 +2,7 @@
   description = "Packaging a Mix release as a Tauri desktop app.";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     utils.url = "github:numtide/flake-utils";
     tauri-files = { url = "./src-tauri"; flake = false;};
   };
@@ -15,7 +15,7 @@
   }:
     utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-      beamPackages = pkgs.beam.packagesWith pkgs.beam.interpreters.erlang_27;
+      beamPackages = pkgs.beamMinimal28Packages;
       lib = nixpkgs.lib;
 
       # FIXME: put Mix app name

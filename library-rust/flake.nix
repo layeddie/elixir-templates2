@@ -2,7 +2,7 @@
   description = "(a description of your package goes here)";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-25.05;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-25.11;
     rust-overlay.url = github:oxalica/rust-overlay;
   };
 
@@ -12,9 +12,9 @@
     rust-overlay,
   }: let
     overlay = prev: final: rec {
-      beamPackages = prev.beam.packagesWith prev.beam.interpreters.erlang_27;
-      elixir = beamPackages.elixir_1_18;
-      erlang = prev.erlang_27;
+      beamPackages = prev.beamMinimal28Packages;
+      elixir = beamPackages.elixir_1_19;
+      erlang = beamPackages.erlang;
       hex = beamPackages.hex;
       final.mix2nix = prev.mix2nix.overrideAttrs {
         nativeBuildInputs = [final.elixir];
@@ -38,10 +38,10 @@
     packages = forAllSystems (system: let
       pkgs = nixpkgsFor system;
       # FIXME: import the Mix deps into Nix by running `mix2nix > deps.nix` from a dev shell
-      mixNixDeps = import ./deps.nix {
-        lib = pkgs.lib;
-        beamPackages = pkgs.beamPackages;
-      };
+      # mixNixDeps = import ./deps.nix {
+      #   lib = pkgs.lib;
+      #   beamPackages = pkgs.beamPackages;
+      # };
 
       # Build the rust package
       my-rust-pkg = pkgs.rustPlatform.buildRustPackage {

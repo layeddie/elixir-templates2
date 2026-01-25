@@ -1,16 +1,16 @@
 {
-  description = "A flake template for Phoenix 1.7 projects.";
+  description = "A flake template for Phoenix projects.";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
   outputs = {
     self,
     nixpkgs,
   }: let
     overlay = prev: final: rec {
-      beamPackages = prev.beam.packagesWith prev.beam.interpreters.erlang_27;
-      elixir = beamPackages.elixir_1_18;
-      erlang = prev.erlang_27;
+      beamPackages = prev.beamMinimal28Packages;
+      elixir = beamPackages.elixir_1_19;
+      erlang = beamPackages.erlang;
       hex = beamPackages.hex;
       final.mix2nix = prev.mix2nix.overrideAttrs {
         nativeBuildInputs = [final.elixir];
