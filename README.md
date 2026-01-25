@@ -56,6 +56,16 @@ The rest is probably optional:
 - if attempting to build a Rust package, you'll need to fetch the cargo hash and update it
 - specify the Erlang/OTP version or Elixir version you want to use
 
+## mix2nix vs deps_nix
+
+These templates include the `mix2nix` tool, which transforms `mix.lock` into Nix derivations. `FIXME`s regarding its usage are indicated in the templates.
+
+An alternate tool worth considering is [deps_nix](https://github.com/code-supply/deps_nix). It is an Elixir library, and must be added to your `mix.exs`.
+It can handle git and path dependencies, which `mix2nix` cannot. The `mix deps.nix` command can be added to mix aliases to seamlessly sync Nix dependencies
+when you fetch with `mix deps.get`, for example.
+
+We default to `mix2nix` in the templates because it's a binary and easier to provide boilerplate for, but `deps_nix` is the more complete tool and usually a better choice.
+
 ## Motivation
 
 The motivation for this project came out of seeing more projects use Elixir with Rust (for example, using NIFs via Rustler). I think this pattern will continue, and, if it's likely that we'll live in a mixed Elixir/Rust world, a few questions came up:
