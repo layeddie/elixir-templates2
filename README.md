@@ -24,7 +24,7 @@ This repo's flake exposes several templates. For example, to import the `shell` 
 nix flake init -t github:jurraca/elixir-templates#shell
 ```
 
-This will import the `flake.nix` template located at `shell/flake.nix` to your current path, i.e. create `flake.nix`, `flake.lock`, and `shell.nix` files.
+This will import the `flake.nix` template located at `shell/flake.nix` to your current path as `flake.nix`. Other templates may create separate `flake.nix` and `shell.nix` files.
 
 You can specify which template to import with the `#` at the end of the template repo location, as shown above. That's the syntax to resolve output attribute paths of a flake in Nix.
 
